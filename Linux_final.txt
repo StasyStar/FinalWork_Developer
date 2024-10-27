@@ -1,0 +1,64 @@
+# Подключение к удаленной ОС
+stasy@192 ~ % ssh stasy@192.168.64.14
+stasy@192.168.64.14's password: 
+-----------------------------------------------------------------------------------------------
+# Задача № 1. Используя команду cat в терминале операционной системы Linux, создать
+два файла Домашние животные (заполнив файл собаками, кошками,
+хомяками) и Вьючные животными заполнив файл Лошадьми, верблюдами и
+ослы), а затем объединить их. Просмотреть содержимое созданного файла.
+Переименовать файл, дав ему новое имя (Друзья человека).
+stasy@stasy-QEMU-Virtual-Machine:~$ cat > Домашние_животные
+собаки
+кошки
+хомяки
+stasy@stasy-QEMU-Virtual-Machine:~$ cat > Вьючные_животные
+лошади 
+верблюды
+ослы
+stasy@stasy-QEMU-Virtual-Machine:~$ cat Домашние_животные Вьючные_животные > Друзья_человека
+stasy@stasy-QEMU-Virtual-Machine:~$ cat Друзья_человека 
+собаки
+кошки
+хомяки
+лошади
+верблюды
+ослы
+-----------------------------------------------------------------------------------------------
+# Задача № 2. Создать директорию, переместить файл туда.
+stasy@stasy-QEMU-Virtual-Machine:~$ mkdir final_work
+stasy@stasy-QEMU-Virtual-Machine:~$ mv Друзья_человека final_work/
+stasy@stasy-QEMU-Virtual-Machine:~$ cd final_work/
+stasy@stasy-QEMU-Virtual-Machine:~/final_work$ ll
+total 12
+drwxrwxr-x  2 stasy stasy 4096 окт 27 12:40 ./
+drwxr-x--- 20 stasy stasy 4096 окт 27 12:40 ../
+-rw-rw-r--  1 stasy stasy   76 окт 27 12:38 Друзья_человека
+-----------------------------------------------------------------------------------------------
+# Задача № 3. Подключить дополнительный репозиторий MySQL. Установить любой пакет
+из этого репозитория.
+stasy@stasy-QEMU-Virtual-Machine:~/final_work$ sudo apt update
+stasy@stasy-QEMU-Virtual-Machine:~/final_work$ sudo apt install mysql-server
+
+-----------------------------------------------------------------------------------------------
+# Задача № 4. Установить и удалить deb-пакет с помощью dpkg.
+# Ищем среди пакетов
+stasy@stasy-QEMU-Virtual-Machine:~/final_work$ apt search mysql
+...
+changeme/jammy 1.2.3-3 all
+  Default credential scanner
+...
+# Скачиваем нужный
+stasy@stasy-QEMU-Virtual-Machine:~/final_work$ curl -O http://ports.ubuntu.com/pool/universe/c/changeme/changeme_1.2.3-3_all.deb
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 53382  100 53382    0     0   172k      0 --:--:-- --:--:-- --:--:--  173k
+# Устанавливаем с помощью dpkg
+stasy@stasy-QEMU-Virtual-Machine:~/final_work$ sudo dpkg -i changeme_1.2.3-3_all.deb
+# Проверяем все установленные пакеты с changeme с названии
+stasy@stasy-QEMU-Virtual-Machine:~/final_work$ dpkg -l | grep changeme
+iU  changeme                                   1.2.3-3                                 all          Default credential scanner
+# Удаляем с помощью dpkg
+stasy@stasy-QEMU-Virtual-Machine:~/final_work$ sudo dpkg -r changeme
+# Проверяем все установленные пакеты с changeme с названии
+stasy@stasy-QEMU-Virtual-Machine:~/final_work$ dpkg -l | grep changeme
+stasy@stasy-QEMU-Virtual-Machine:~/final_work$ 
